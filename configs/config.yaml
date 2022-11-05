@@ -3,5 +3,7 @@
 
 logger:
   level: "debug"
-rest-port: "80"
-grpc-port: "443"
+rest-port: "8080"
+grpc-port: "8081"
+jwt:
+  secret: "super-secret-key"

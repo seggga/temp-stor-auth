@@ -14,11 +14,16 @@ type Config struct {
 	Logger   Logger `yaml:"logger"`
 	RestPort string `yaml:"rest-port"`
 	GrpcPorg string `yaml:"grpc-port"`
+	JWT      JWT    `yamll:"jwt"`
 }
 
 // Logger has values for the logger
 type Logger struct {
 	Level string `yaml:"level"`
+}
+
+type JWT struct {
+	Secret string `yaml:"secret"`
 }
 
 func readConfig() *Config {

@@ -24,7 +24,7 @@ func Start(ctx context.Context) {
 	logger = initLogger(cfg.Logger.Level)
 	stor := memory.New()
 
-	authService := auth.New(stor)
+	authService := auth.New(stor, cfg.JWT.Secret)
 	gService = grpc.New(stor)
 	rService = rest.New(authService, logger, cfg.RestPort)
 

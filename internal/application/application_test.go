@@ -13,6 +13,8 @@ logger:
   level: "debug"
 rest-port: "80"
 grpc-port: "443"
+jwt:
+  secret: "super-secret-key"
 `
 
 	cfgExpected = Config{
@@ -21,6 +23,9 @@ grpc-port: "443"
 		},
 		RestPort: "80",
 		GrpcPorg: "443",
+		JWT: JWT{
+			Secret: "super-secret-key",
+		},
 	}
 )
 
