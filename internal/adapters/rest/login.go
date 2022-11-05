@@ -7,8 +7,8 @@ import (
 
 type ctxKeyUser struct{}
 type credentials struct {
-	Login string
-	Pass  string
+	Login string `json:"username"`
+	Pass  string `json:"password"`
 }
 
 // CheckAuth reads login/pass from requests body and returns JWT tokenpair
@@ -26,7 +26,7 @@ func (s *Service) login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// find password hash for specified user
+	// obtain token if password is correct
 	token, err := s.auth.Login(r.Context(), creds.Login, creds.Pass)
 	if err != nil {
 		s.logger.Sugar().Debugf("wrong login/pass provided, %s: %v", creds.Login, err)
