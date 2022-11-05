@@ -1,0 +1,7 @@
+# config.yaml
+# sets loglevel and ports for REST and gRPC services 
+
+logger:
+  level: "debug"
+rest-port: "80"
+grpc-port: "443"
