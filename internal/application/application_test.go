@@ -15,6 +15,7 @@ rest-port: "80"
 grpc-port: "443"
 jwt:
   secret: "super-secret-key"
+  duration: 600
 `
 
 	cfgExpected = Config{
@@ -24,7 +25,8 @@ jwt:
 		RestPort: "80",
 		GrpcPorg: "443",
 		JWT: JWT{
-			Secret: "super-secret-key",
+			Secret:   "super-secret-key",
+			Duration: 600,
 		},
 	}
 )
