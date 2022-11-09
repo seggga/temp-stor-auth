@@ -23,7 +23,8 @@ type Logger struct {
 }
 
 type JWT struct {
-	Secret string `yaml:"secret"`
+	Secret   string `yaml:"secret"`
+	Duration int    `yaml:"duration"`
 }
 
 func readConfig() *Config {

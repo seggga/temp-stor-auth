@@ -10,15 +10,23 @@ import (
 
 // Service implements main auth logic
 type Service struct {
-	db        ports.UserStorage
-	jwtSecret string
+	db  ports.UserStorage
+	jwt jwtCfg
+}
+
+type jwtCfg struct {
+	secret   string
+	duration int
 }
 
 // New creates a new auth service
-func New(db ports.UserStorage, secret string) *Service {
+func New(db ports.UserStorage, secret string, duration int) *Service {
 	return &Service{
-		db:        db,
-		jwtSecret: secret,
+		db: db,
+		jwt: jwtCfg{
+			secret:   secret,
+			duration: duration,
+		},
 	}
 }
 
@@ -44,7 +52,7 @@ func (s *Service) Login(ctx context.Context, login, password string) (*models.To
 	}
 
 	// generate token
-	token, err := createToken(login, s.jwtSecret)
+	token, err := createToken(login, s.jwt.secret, s.jwt.duration)
 	if err != nil {
 		return nil, fmt.Errorf("cannot generate JWT: %v", err)
 	}
@@ -57,5 +65,5 @@ func checkPass(pass, hash string) error {
 	if pass == hash {
 		return nil
 	}
-	return PassIncorrect
+	return PASS_INCORRECT
 }
