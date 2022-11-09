@@ -26,14 +26,24 @@ func checkToken(tokenString, jwtSecret string) (bool, string) {
 }
 
 // createToken ...
-func createToken(login, secret string) (string, error) {
+func createToken(login, secret string, duration int) (string, error) {
+	// check for empty secret
+	if secret == "" {
+		return "", EMPTY_SECRET
+	}
+
+	// check for incorrect token's time-to-live timeout
+	if duration <= 0 {
+		return "", ZERO_DURATION
+	}
+
 	mySigningKey := []byte(secret)
 
 	// generate access token
 	claims := &Claims{
 		Username: login,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(10 * time.Minute)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(duration) * time.Second)),
 			Issuer:    "temp-stor-auth",
 			Subject:   login,
 		},
